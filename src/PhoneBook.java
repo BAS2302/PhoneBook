@@ -6,7 +6,13 @@ public class PhoneBook {
         //Добавить считывание ввода пользователя в цикле
         System.out.println("Введите имя в формате ФИО");
         Scanner scanner = new Scanner(System.in);
-        checkName(scanner.nextLine());
+        boolean isCheckName = false;
+        while (!isCheckName) {
+            String name = scanner.nextLine();
+            isCheckName = checkName(name);
+            if (!isCheckName) System.out.println("Введите корректное имя!");
+        }
+
     }
 
     public static boolean checkPhoneNumber(String phoneNumber) {
@@ -20,7 +26,7 @@ public class PhoneBook {
             if (arrayName[0].charAt(famLen-1) == 'а') {
                 arrayName[0] = arrayName[0].substring(0, famLen-1);
             }
-            String famLastTwo = arrayName[0].substring(famLen - 2, famLen);
+            String famLastTwo = arrayName[0].substring(famLen - 3, famLen - 1);
             switch (famLastTwo) {
                 case "ов":
                 case "ев":
@@ -30,7 +36,7 @@ public class PhoneBook {
                 case "ыч":
                     return true;
             }
-            String famLastFore = arrayName[0].substring(famLen - 4, famLen);
+            String famLastFore = arrayName[0].substring(famLen - 5, famLen - 1);
             switch (famLastFore) {
                 case "ский":
                 case "ская":
