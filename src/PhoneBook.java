@@ -25,18 +25,19 @@ public class PhoneBook {
             int famLen = arrayName[0].length();
             if (arrayName[0].charAt(famLen-1) == 'а') {
                 arrayName[0] = arrayName[0].substring(0, famLen-1);
+                famLen = arrayName[0].length();
             }
-            String famLastTwo = arrayName[0].substring(famLen - 3, famLen - 1);
+            String famLastTwo = arrayName[0].substring(famLen - 2, famLen);
             switch (famLastTwo) {
                 case "ов":
                 case "ев":
                 case "ин":
                 case "ын":
                 case "их":
-                case "ыч":
+                case "ых":
                     return true;
             }
-            String famLastFore = arrayName[0].substring(famLen - 5, famLen - 1);
+            String famLastFore = arrayName[0].substring(famLen - 4, famLen);
             switch (famLastFore) {
                 case "ский":
                 case "ская":
