@@ -6,17 +6,23 @@ public class PhoneBook {
         //Добавить считывание ввода пользователя в цикле
         System.out.println("Введите имя в формате ФИО");
         Scanner scanner = new Scanner(System.in);
+        String name = "";
         boolean isCheckName = false;
         while (!isCheckName) {
-            String name = scanner.nextLine();
+            name = scanner.nextLine();
             isCheckName = checkName(name);
             if (!isCheckName) System.out.println("Введите корректное имя!");
         }
+        System.out.println(formatName(name));
 
     }
 
     public static boolean checkPhoneNumber(String phoneNumber) {
-        return true;
+        String cleanTelNum = phoneNumber.replaceAll("[^0-9]", "");
+        int numLength = cleanTelNum.length();
+        if (numLength == 11) {
+            return true;
+        } else return false;
     }
 
     public static boolean checkName(String name) {
@@ -50,18 +56,36 @@ public class PhoneBook {
     }
 
     public static String formatName(String name) {
-        return "";
+        String[] words = name.trim().split(" ");
+        String result = "";
+        for (int i = 0; i < words.length; i++) {
+            char firstChar = words[i].charAt(0);
+            if (!Character.isUpperCase(firstChar)) {
+                result += Character.toUpperCase(firstChar) + words[i].substring(1) + " ";
+            } else {
+                result += words[i] + " ";
+            }
+        }
+        return result;
     }
 
     public static String formatPhoneNumber(String number) {
-        return "";
+        number = number.replaceAll("[^0-9]", "");
+        number = "+7" + number.substring(1, 4) + " " + number.substring(4, 7)
+                + " " + number.substring(7, 9) + " " + number.substring(9, 11);
+
+        return number;
     }
 
     public static void add(String[][] book, String name, String number) {
+
         //add logic
     }
 
     public static void list(String[][] book) {
+        for (int i = 0; i < book.length; i++) {
+            System.out.println(book[i][0] + ": " + book[i][1]);
+        }
         //print phone book
     }
 }
