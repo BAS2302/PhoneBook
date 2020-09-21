@@ -4,16 +4,8 @@ public class PhoneBook {
 
     public static void main(String[] args) {
         //Добавить считывание ввода пользователя в цикле
-        System.out.println("Введите имя в формате ФИО");
+
         Scanner scanner = new Scanner(System.in);
-        String name = "";
-        boolean isCheckName = false;
-        while (!isCheckName) {
-            name = scanner.nextLine();
-            isCheckName = checkName(name);
-            if (!isCheckName) System.out.println("Введите корректное имя!");
-        }
-        System.out.println(formatName(name));
 
     }
 
@@ -78,6 +70,37 @@ public class PhoneBook {
     }
 
     public static void add(String[][] book, String name, String number) {
+        Scanner scanner = new Scanner(System.in);
+        name = "";
+        number = "";
+        boolean isCheckName = false;
+        boolean isCheckNumber = false;
+        System.out.println("Желаете ввести имя или номер телефона? " +
+                "Введите да если хотите ввести Имя и нет, если номер");
+        String answer = "";
+        if (answer.toLowerCase() == "да") {
+            while (!isCheckName) {
+                name = scanner.nextLine();
+                isCheckName = checkName(name);
+                if (!isCheckName) System.out.println("Введите корректное имя!");
+            }
+
+
+        } else {
+            while (!isCheckNumber) {
+                number = scanner.nextLine();
+                isCheckNumber = checkPhoneNumber(name);
+                if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
+            }
+
+        }
+
+
+        int i = 1;
+        book = new String[i][2];
+        if (i == 1) {
+
+        }
 
         //add logic
     }
