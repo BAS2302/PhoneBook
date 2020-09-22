@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class PhoneBook {
@@ -71,33 +72,49 @@ public class PhoneBook {
 
     public static void add(String[][] book, String name, String number) {
         Scanner scanner = new Scanner(System.in);
+        int stringNum = 0;
+        int columnNum = 2;
+        book = new String[stringNum][columnNum];
         name = "";
         number = "";
         boolean isCheckName = false;
         boolean isCheckNumber = false;
         System.out.println("Желаете ввести имя или номер телефона? " +
                 "Введите да если хотите ввести Имя и нет, если номер");
-        String answer = "";
+        String answer = scanner.nextLine();;
         if (answer.toLowerCase() == "да") {
             while (!isCheckName) {
                 name = scanner.nextLine();
                 isCheckName = checkName(name);
                 if (!isCheckName) System.out.println("Введите корректное имя!");
             }
-
+            for (int i = 0; i < stringNum; i++) {
+                if (book[i][0] == name) {
+                    System.out.println("Это имя есть в справочнике!" + name + ": " + book[i][1]);
+                } else if(i == stringNum - 1) {
+                    System.out.println("Такого имени нет в справочнике! Введите номер телефона");
+                    while (!isCheckNumber) {
+                        number = scanner.nextLine();
+                        isCheckNumber = checkPhoneNumber(number);
+                        if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
+                    }
+                    book = Arrays.copyOf(book, stringNum + 1);
+                    book[stringNum - 1][0] = name;
+                    book[stringNum - 1][1] = number;
+                }
+            }
 
         } else {
             while (!isCheckNumber) {
                 number = scanner.nextLine();
-                isCheckNumber = checkPhoneNumber(name);
+                isCheckNumber = checkPhoneNumber(number);
                 if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
             }
 
         }
 
 
-        int i = 1;
-        book = new String[i][2];
+
         if (i == 1) {
 
         }
