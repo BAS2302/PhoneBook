@@ -2,11 +2,88 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class PhoneBook {
+    static int stringNum = 0;
 
     public static void main(String[] args) {
         //Добавить считывание ввода пользователя в цикле
-
         Scanner scanner = new Scanner(System.in);
+
+        int columnNum = 2;
+        String[][] book = new String[stringNum][columnNum];
+        String name = "";
+        String number = "";
+        boolean isCheckName = false;
+        boolean isCheckNumber = false;
+        String answerEnd = "";
+        String answer = "";
+        do {
+            System.out.println("Желаете ввести имя или номер телефона? " +
+                    "Введите да если хотите ввести Имя и нет, если номер");
+            answer = scanner.nextLine();
+
+            if (answer.toLowerCase() == "да") {
+                System.out.println("Введите имя:");
+                while (!isCheckName) {
+                    name = scanner.nextLine();
+                    isCheckName = checkName(name);
+                    if (!isCheckName) System.out.println("Введите корректное имя!");
+                }
+                for (int i = 0; i < stringNum; i++) {
+                    if (book[i][0] == name) {
+                        System.out.println("Это имя есть в справочнике!" + name + ": " + book[i][1]);
+                    } else if (i == stringNum - 1) {
+                        System.out.println("Такого имени нет в справочнике! Введите номер телефона");
+                        while (!isCheckNumber) {
+                            number = scanner.nextLine();
+                            isCheckNumber = checkPhoneNumber(number);
+                            if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
+                        }
+                        add(book, name, number);
+/*
+                        stringNum += 1;
+                        book = Arrays.copyOf(book, stringNum);
+                        book[stringNum - 1][0] = name;
+                        book[stringNum - 1][1] = number;
+*/
+                    }
+                }
+
+            } else {
+                System.out.println("Введите номер:");
+                while (!isCheckNumber) {
+                    number = scanner.nextLine();
+                    isCheckNumber = checkPhoneNumber(number);
+                    if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
+                }
+                for (int i = 0; i < stringNum; i++) {
+                    if (book[i][1] == number) {
+                        System.out.println("Этот номер есть в справочнике!" + book[i][0] + ": " + number);
+                    } else if (i == stringNum - 1) {
+                        System.out.println("Такого номера нет в справочнике! Введите имя");
+                        while (!isCheckName) {
+                            name = scanner.nextLine();
+                            isCheckName = checkName(name);
+                            if (!isCheckName) System.out.println("Введите корректное имя!");
+                        }
+
+
+                        add(book, name, number);
+/*
+                        book = Arrays.copyOf(book, stringNum);
+                        book[stringNum - 1][0] = name;
+                        book[stringNum - 1][1] = number;
+*/
+                    }
+                }
+
+
+            }
+
+            System.out.println("Хотите продолжить? Да/Нет");
+            answerEnd = scanner.nextLine();
+
+        } while (answerEnd.toLowerCase() == "нет");
+
 
     }
 
@@ -71,73 +148,11 @@ public class PhoneBook {
     }
 
     public static void add(String[][] book, String name, String number) {
-        Scanner scanner = new Scanner(System.in);
-        int stringNum = 0;
-        int columnNum = 2;
-        book = new String[stringNum][columnNum];
-        name = "";
-        number = "";
-        boolean isCheckName = false;
-        boolean isCheckNumber = false;
-        String answerEnd;
-        do {
-            System.out.println("Желаете ввести имя или номер телефона? " +
-                    "Введите да если хотите ввести Имя и нет, если номер");
-            String answer = scanner.nextLine();
+        stringNum += 1;
+        book = Arrays.copyOf(book, stringNum);
+        book[stringNum - 1][0] = name;
+        book[stringNum - 1][1] = number;
 
-            if (answer.toLowerCase() == "да") {
-                while (!isCheckName) {
-                    name = scanner.nextLine();
-                    isCheckName = checkName(name);
-                    if (!isCheckName) System.out.println("Введите корректное имя!");
-                }
-                for (int i = 0; i < stringNum; i++) {
-                    if (book[i][0] == name) {
-                        System.out.println("Это имя есть в справочнике!" + name + ": " + book[i][1]);
-                    } else if (i == stringNum - 1) {
-                        System.out.println("Такого имени нет в справочнике! Введите номер телефона");
-                        while (!isCheckNumber) {
-                            number = scanner.nextLine();
-                            isCheckNumber = checkPhoneNumber(number);
-                            if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
-                        }
-                        stringNum += 1;
-                        book = Arrays.copyOf(book, stringNum);
-                        book[stringNum - 1][0] = name;
-                        book[stringNum - 1][1] = number;
-                    }
-                }
-
-            } else {
-                while (!isCheckNumber) {
-                    number = scanner.nextLine();
-                    isCheckNumber = checkPhoneNumber(number);
-                    if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
-                }
-                for (int i = 0; i < stringNum; i++) {
-                    if (book[i][1] == number) {
-                        System.out.println("Этот номер есть в справочнике!" + book[i][0] + ": " + number);
-                    } else if (i == stringNum - 1) {
-                        System.out.println("Такого номера нет в справочнике! Введите имя");
-                        while (!isCheckName) {
-                            name = scanner.nextLine();
-                            isCheckName = checkName(name);
-                            if (!isCheckName) System.out.println("Введите корректное имя!");
-                        }
-                        stringNum += 1;
-                        book = Arrays.copyOf(book, stringNum);
-                        book[stringNum - 1][0] = name;
-                        book[stringNum - 1][1] = number;
-                    }
-                }
-
-
-            }
-
-            System.out.println("Хотите продолжить? Да/Нет");
-            answerEnd = scanner.nextLine();
-
-        } while (answerEnd.toLowerCase() == "нет");
 
         //add logic
     }
