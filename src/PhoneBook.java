@@ -45,7 +45,7 @@ public class PhoneBook {
                 number = formatPhoneNumber(number);
             }
 
-            System.out.println(book.length);
+
 
             if (book.length == 0) {
                 if (name.length() > 1) {
@@ -59,7 +59,8 @@ public class PhoneBook {
                     isCheckNumber = false;
                     number = formatPhoneNumber(number);
                     book = new String[][]{{name,number}};
-                    System.out.println("Данные добавлены в справочник");
+                    System.out.println("Контакт добавлен в справочник");
+                    System.out.println(book[0][0] + ": " + book[0][1]);
                 } else {
                     System.out.println("Такого номера нет в справочнике");
                     System.out.println("Введите имя");
@@ -71,16 +72,20 @@ public class PhoneBook {
                     isCheckName = false;
                     name = formatName(name);
                     book = new String[][]{{name,number}};
-                    System.out.println("Данные добавлены в справочник");
+                    System.out.println("Контакт добавлен в справочник");
+                    System.out.println(book[0][0] + ": " + book[0][1]);
                 }
             } else {
                 if (name.length() > 1) {
-                    for (int i = 0; i < book.length; i++) {
+                    int bookLen = book.length;
+                    for (int i = 0; i < bookLen; i++) {
+                        System.out.println(i + "a");
                         if (book[i][0].equals(name)) {
                             System.out.println("Такое имя есть в справочнике");
                             System.out.println(book[i][0] + ": " + book[i][1]);
+                            break;
                         } else {
-                            if (i == book.length - 1) {
+                            if (i == bookLen - 1) {
                                 System.out.println("Такого имени нет в справочнике");
                                 System.out.println("Введите номер");
                                 while (!isCheckNumber) {
@@ -88,20 +93,25 @@ public class PhoneBook {
                                     isCheckNumber = checkPhoneNumber(number);
                                     if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
                                 }
+                                System.out.println(i + "b");
                                 isCheckNumber = false;
                                 number = formatPhoneNumber(number);
-                                add(book, name, number);
+                                book = add(book, name, number);
+                                System.out.println("Контакт добавлен в справочник");
+                                System.out.println(book[book.length - 1][0] + ": " + book[book.length - 1][1]);
                             }
                         }
                     }
 
                 } else {
-                    for (int i = 0; i < book.length; i++) {
+                    int bookLen = book.length;
+                    for (int i = 0; i < bookLen; i++) {
                         if (book[i][1].equals(number)) {
                             System.out.println("Такой номер есть в справочнике");
                             System.out.println(book[i][0] + ": " + book[i][1]);
+                            break;
                         } else {
-                            if (i == book.length - 1) {
+                            if (i == bookLen - 1) {
                                 System.out.println("Такого номера нет в справочнике");
                                 System.out.println("Введите имя");
                                 while (!isCheckName) {
@@ -111,13 +121,14 @@ public class PhoneBook {
                                 }
                                 isCheckName = false;
                                 name = formatName(name);
-                                add(book, name, number);
+                                book = add(book, name, number);
+                                System.out.println("Контакт добавлен в справочник");
+                                System.out.println(book[book.length - 1][0] + ": " + book[book.length - 1][1]);
                             }
                         }
                     }
                 }
             }
-
             System.out.println("Хотите продолжить? Да/Нет");
             answerEnd = scanner.nextLine();
 
@@ -190,17 +201,17 @@ public class PhoneBook {
 
 
 
-    public static void add(String[][] book, String name, String number) {
+    public static String[][] add(String[][] book, String name, String number) {
         book = addLength(book);
         book[book.length - 1][0] = name;
         book[book.length - 1][1] = number;
-        System.out.println(book[book.length - 1][0]);
+        return book;
         //add logic
     }
 
     public static String[][] addLength(String[][] book) {
         int arrayLen = book.length;
-        System.out.println(book.length);
+
         String[][] copBook = new String[arrayLen][2];
         for (int i = 0; i < arrayLen; i++) {
             copBook[i][0] = book[i][0];
