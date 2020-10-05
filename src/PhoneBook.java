@@ -2,13 +2,10 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class PhoneBook {
-//    static int stringNum = 1;
 
     public static void main(String[] args) {
         //Добавить считывание ввода пользователя в цикле
         Scanner scanner = new Scanner(System.in);
-
-//        int columnNum = 2;
         String[][] book = new String[0][2];
         String name = "";
         String number = "";
@@ -44,9 +41,6 @@ public class PhoneBook {
                 isCheckNumber = false;
                 number = formatPhoneNumber(number);
             }
-
-
-
             if (book.length == 0) {
                 if (name.length() > 1) {
                     System.out.println("Такого имени нет в справочнике");
@@ -79,7 +73,6 @@ public class PhoneBook {
                 if (name.length() > 1) {
                     int bookLen = book.length;
                     for (int i = 0; i < bookLen; i++) {
-                        System.out.println(i + "a");
                         if (book[i][0].equals(name)) {
                             System.out.println("Такое имя есть в справочнике");
                             System.out.println(book[i][0] + ": " + book[i][1]);
@@ -93,7 +86,6 @@ public class PhoneBook {
                                     isCheckNumber = checkPhoneNumber(number);
                                     if (!isCheckNumber) System.out.println("Введите корректный номер телефона!");
                                 }
-                                System.out.println(i + "b");
                                 isCheckNumber = false;
                                 number = formatPhoneNumber(number);
                                 book = add(book, name, number);
@@ -102,7 +94,6 @@ public class PhoneBook {
                             }
                         }
                     }
-
                 } else {
                     int bookLen = book.length;
                     for (int i = 0; i < bookLen; i++) {
@@ -133,10 +124,7 @@ public class PhoneBook {
             answerEnd = scanner.nextLine();
 
         } while (answerEnd.toLowerCase().equals("да"));
-
         list(book);
-
-
     }
 
     public static boolean checkPhoneNumber(String phoneNumber) {
@@ -199,8 +187,6 @@ public class PhoneBook {
         return number;
     }
 
-
-
     public static String[][] add(String[][] book, String name, String number) {
         book = addLength(book);
         book[book.length - 1][0] = name;
@@ -226,8 +212,27 @@ public class PhoneBook {
         return book;
     }
 
-
     public static void list(String[][] book) {
+        for (int i = 0; i < book.length - 1; i++) {
+            for (int j = i + 1; j < book.length; j++) {
+                for (int k = 0; k < book[i][0].length(); k++) {
+                    if (book[i][0].charAt(k) < book[j][0].charAt(k)) {
+                        break;
+                    } else {
+                        if (book[i][0].charAt(k) == book[j][0].charAt(k)) {
+                        } else {
+                            String bookFirst = book[i][0];
+                            String bookSecond = book[i][1];
+                            book[i][0] = book[j][0];
+                            book[i][1] = book[j][1];
+                            book[j][0] = bookFirst;
+                            book[j][1] = bookSecond;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         for (int i = 0; i < book.length; i++) {
             System.out.println(book[i][0] + ": " + book[i][1]);
         }
